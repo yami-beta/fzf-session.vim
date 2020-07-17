@@ -67,11 +67,13 @@ function! s:session_sink(args) abort
 endfunction
 
 function! fzf#session#run() abort
-  call fzf#run({
-  \ 'source': map(s:get_session_list(), 's:get_session_name(v:val)'),
-  \ 'sink*': function("s:session_sink"),
-  \ 'options': ['--expect=ctrl-d']
+  call fzf#run(
+  \ fzf#wrap({
+  \   'source': map(s:get_session_list(), 's:get_session_name(v:val)'),
+  \   'sink*': function("s:session_sink"),
+  \   'options': ['--expect=ctrl-d']
   \ })
+  \ )
 endfunction
 
 
